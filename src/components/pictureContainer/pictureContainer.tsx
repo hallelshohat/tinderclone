@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import PictureGenerator from '../../pictureGenerator';
 import {add} from '../../reducers/pictureReducer';
 import styles from './pictureContainer.module.css';
+import appStyles from '../../App.module.css';
 import {HeartTwoTone, FrownTwoTone, SmileOutlined} from '@ant-design/icons';
 import { Spin } from 'antd';
 
@@ -58,8 +59,8 @@ export default function PictureContainer() {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.container}>
+        <div>
+            <div className={appStyles.container}>
                 <div className={styles.picContainer}>
                     <img src={tmpPic} alt="" className={tmpPicStyle}
                         onAnimationEnd={flipTmp}/>

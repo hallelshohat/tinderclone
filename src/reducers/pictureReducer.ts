@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const slice = createSlice({
     name: 'pictures',
     initialState: {
-        pictures: []
+        pictures: [] as string[]
     },
     reducers: {
         add: (state, action) => {

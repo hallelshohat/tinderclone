@@ -1,0 +1,40 @@
+.app {
+  margin: auto;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  margin: 1vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.headerLink {
+  flex: 1;
+}
+
+.logo {
+  margin: auto;
+  animation-name: fade;
+  animation-duration: 2s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

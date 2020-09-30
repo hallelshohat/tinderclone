@@ -1,5 +1,5 @@
 export default class PictureGenerator {
-    sleep(ms) {
+    sleep(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
