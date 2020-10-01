@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPics } from '../../reducers/likedPictureReducer';
 import styles from './pictureGallery.module.css';
-import appStyles from '../../App.module.css';
 import 'react-image-lightbox/style.css';
 import Lightbox from 'react-image-lightbox';
 import { DislikeFilled } from '@ant-design/icons';
@@ -20,7 +19,6 @@ export default function PictureGallery() {
     }
 
     return (
-        // <div className={appStyles.container}>
         <div>
             <div className={styles.galleryContainer}>
                 {pics.map((pic, index) => (

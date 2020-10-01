@@ -74,12 +74,12 @@ export default function PictureContainer() {
                 </div>
             </div>
             <div className={styles.btnContainer}>
-                <button className={`${styles.actionBtn} ${styles.dislikeBtn}`}
-                    onClick={dislike}>
+                <button className={`${styles.actionBtn} ${styles.dislikeBtn}`} 
+                    onClick={dislike} disabled={!pic}>
                     <FrownTwoTone twoToneColor="#2a18e7" style={{fontSize:30}}/>
                 </button>
                 <button className={`${styles.actionBtn} ${styles.likeBtn}`} 
-                    onClick={like}>
+                    onClick={like} disabled={!pic}>
                     <HeartTwoTone twoToneColor="#b80404" style={{fontSize:30}}/>
                 </button>
             </div>
