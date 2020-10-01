@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PictureGenerator from '../../pictureGenerator';
-import {add} from '../../reducers/pictureReducer';
+import {add} from '../../reducers/likedPictureReducer';
 import styles from './pictureChooser.module.css';
 import appStyles from '../../App.module.css';
 import {HeartTwoTone, FrownTwoTone, SmileOutlined} from '@ant-design/icons';

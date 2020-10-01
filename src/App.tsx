@@ -4,6 +4,7 @@ import {FireTwoTone, LikeTwoTone} from '@ant-design/icons';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
 import OptionsPage from './pages/PhotosPage';
+import { Divider } from 'antd';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
             </Link>
           </div>
         </header>
-
+        <Divider/>
+        
         <Route exact path="/">
             <HomePage/>
         </Route>

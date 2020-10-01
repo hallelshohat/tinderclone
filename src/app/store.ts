@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pictureReducer from "../reducers/pictureReducer";
+import likedPictureReducer from "../reducers/likedPictureReducer";
 
 export default configureStore({
   reducer: {
-    pictures: pictureReducer,
+    likedPictures: likedPictureReducer,
   },
 });

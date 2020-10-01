@@ -1,4 +1,39 @@
+@media (max-width:2000px) {
+    .picture {
+        max-width: 23vw;
+    }
+}
+
+@media (max-width:1000px) {
+    .picture {
+        max-width: 30vw;
+    }
+}
+
+@media (max-width:800px) {
+    .picture {
+        max-width: 43vw;
+    }
+}
+
+@media (max-width:400px) {
+    .picture {
+        max-width: 90vw;
+    }
+}
+
 .picture {
-    max-height: 30vh;
-    max-width: 35vw;
+    margin: 0.2vw;
+    transition: all 0.2s;
+}
+
+.picture:hover{
+    transform: scale(1.05);
+}
+
+.galleryContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
 }

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const slice = createSlice({
-    name: 'pictures',
+    name: 'likedPictures',
     initialState: {
         pictures: [] as string[]
     },
@@ -10,11 +10,14 @@ export const slice = createSlice({
             state.pictures.push(action.payload);
         },
         remove: (state, action) => {
-            state.pictures = state.pictures.filter(item=>item === action.payload);
+            const index = state.pictures
+                .findIndex(item=> item === action.payload);
+            if (index !== -1) 
+                state.pictures.splice(index, 1);
         }
     }
 });
 
-export const selectPics = (state:any):string[] => state.pictures.pictures;
+export const selectPics = (state:any):string[] => state.likedPictures.pictures;
 export const {add, remove} = slice.actions;
 export default slice.reducer;
