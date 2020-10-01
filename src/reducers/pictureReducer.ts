@@ -15,5 +15,6 @@ export const slice = createSlice({
     }
 });
 
+export const selectPics = (state:any):string[] => state.pictures.pictures;
 export const {add, remove} = slice.actions;
 export default slice.reducer;

@@ -3,7 +3,7 @@ import styles from './App.module.css'
 import {BarsOutlined, FireTwoTone} from '@ant-design/icons';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
-import PhotosPage from './pages/PhotosPage';
+import OptionsPage from './pages/PhotosPage';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
             </div>
           </Link>
           <div className={styles.headerLink}>
-            <Link to="/photos">
+            <Link to="/options">
               <BarsOutlined style={{fontSize:25}}/>
             </Link>
           </div>
@@ -26,8 +26,8 @@ function App() {
         <Route exact path="/">
             <HomePage/>
         </Route>
-        <Route exact path="/photos">
-          <PhotosPage/>
+        <Route exact path="/options">
+          <OptionsPage/>
         </Route>
       </BrowserRouter>
     </div>

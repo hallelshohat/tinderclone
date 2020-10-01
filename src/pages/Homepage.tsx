@@ -1,11 +1,11 @@
 import React from 'react';
-import PictureContainer from '../components/pictureContainer/pictureContainer';
+import PictureChooser from '../components/pictureChooser/pictureChooser';
 import styles from '../App.module.css'
 
 export default function HomePage() {
     return (
         <div className={styles.container}>
-            <PictureContainer/>
+            <PictureChooser/>
         </div>
     )
 }
