@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './App.module.css'
-import {BarsOutlined, FireTwoTone} from '@ant-design/icons';
+import {FireTwoTone, LikeTwoTone} from '@ant-design/icons';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
 import OptionsPage from './pages/PhotosPage';
@@ -18,7 +18,8 @@ function App() {
           </Link>
           <div className={styles.headerLink}>
             <Link to="/options">
-              <BarsOutlined style={{fontSize:25}}/>
+              <LikeTwoTone twoToneColor="#FF9D0B" 
+                style={{fontSize:25}}/>
             </Link>
           </div>
         </header>

@@ -8,18 +8,19 @@ import Lightbox from 'react-image-lightbox';
 
 export default function PictureGallery() {
     const pics = useSelector(selectPics);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [picIndex, setPicIndex] = useState(-1);
 
     return (
         <div className={appStyles.container}>
             {pics.map((pic, index) => (
                 <img key={index} src={pic} className={styles.picture} 
                     alt=""
-                    onClick={()=>setModalVisible(true)}/>
+                    onClick={()=>setPicIndex(index)}/>
             ))}
 
-            {modalVisible && <Lightbox mainSrc={pics[0]} 
-                onCloseRequest={()=>setModalVisible(false)}/> }
+            {picIndex!==-1 && <Lightbox mainSrc={pics[picIndex]} 
+                toolbarButtons={[]}
+                onCloseRequest={()=>setPicIndex(-1)}/> }
         </div>
     )
 }
