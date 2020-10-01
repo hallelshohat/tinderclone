@@ -13,11 +13,15 @@ export default function PictureContainer() {
     const [tmpPic, setTmpPic] = useState("");
     const [picStyle, setPicStyle] = useState(""); 
     const [tmpPicStyle, setTmpPicStyle] = useState("");
+    const [likeStyle, setLikeStyle] = useState("");
+    const [dislikeStyle, setDislikeStyle] = useState("");
 
     const changePic = async() => {
         const generator = new PictureGenerator();
         setTmpPic(await generator.getImageUrl());
         setTmpPicStyle(styles.zoomAnimation);
+        setLikeStyle("");
+        setDislikeStyle("");
     }
 
     const flipTmp = () => {
@@ -74,12 +78,14 @@ export default function PictureContainer() {
                 </div>
             </div>
             <div className={styles.btnContainer}>
-                <button className={`${styles.actionBtn} ${styles.dislikeBtn}`} 
-                    onClick={dislike} disabled={!pic}>
+                <button className={`${styles.actionBtn} ${styles.dislikeBtn} ${dislikeStyle}`} 
+                    onClick={dislike} disabled={!pic} 
+                    onTouchStart={()=>setDislikeStyle(styles.hoverEffect)}>
                     <FrownTwoTone twoToneColor="#2a18e7" style={{fontSize:30}}/>
                 </button>
-                <button className={`${styles.actionBtn} ${styles.likeBtn}`} 
-                    onClick={like} disabled={!pic}>
+                <button className={`${styles.actionBtn} ${styles.likeBtn} ${likeStyle}`} 
+                    onClick={like} disabled={!pic}
+                    onTouchStart={()=>setLikeStyle(styles.hoverEffect)}>
                     <HeartTwoTone twoToneColor="#b80404" style={{fontSize:30}}/>
                 </button>
             </div>

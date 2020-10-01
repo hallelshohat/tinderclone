@@ -44,9 +44,16 @@
   border-color: #8193ff;
 }
 
-.actionBtn:hover:not([disabled]) {
-  background-color: #ffe7ff;
-  transform: translateY(-0.5vh);
+@media (hover:hover) {
+  .actionBtn:hover:not([disabled]) {
+      background-color: #ffe7ff;
+      transform: translateY(-0.5vh);
+  }
+}
+
+.hoverEffect:not([disabled]) {
+    background-color: #ffe7ff;
+    transform: translateY(-0.5vh);
 }
 
 .likeAnimation {
