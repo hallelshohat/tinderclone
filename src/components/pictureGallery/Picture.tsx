@@ -2,7 +2,7 @@ import styles from './pictureGallery.module.css';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
-import { DeleteFilled, DislikeFilled } from '@ant-design/icons';
+import { CheckCircleTwoTone, CloseCircleTwoTone, DeleteFilled, DislikeFilled } from '@ant-design/icons';
 import {remove} from '../../reducers/likedPictureReducer';
 import { Popover } from 'antd';
 
@@ -14,12 +14,21 @@ export default function Picture(props:any) {
     const deletePic = ()=> {
         dispatch(remove(props.src));
         setLightboxVisible(false);
+        setPopoverVisible(false);
     }
 
     return (
         <div>
             <div className={styles.pictureContainer}>
-                <Popover content={"hi"} title="Are you sure?"
+                <Popover content={
+                    <div className={styles.popoverContent}>
+                        <CheckCircleTwoTone twoToneColor="#ffaa01" style={{fontSize:25}}
+                            onClick={deletePic}/>
+                        <CloseCircleTwoTone twoToneColor="#ffaa01" style={{fontSize:25}}
+                            onClick={()=>setPopoverVisible(false)}/>
+                    </div>
+                } 
+                    title="Are you sure?"
                     trigger="click" visible={popoverVisible}
                     onVisibleChange={setPopoverVisible}>
                     <div className={styles.closeBtn}><DeleteFilled/></div>
