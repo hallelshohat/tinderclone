@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import styles from './ChooseButtons.module.css';
 import {HeartTwoTone, FrownTwoTone} from '@ant-design/icons';
 
+const effectTimeout = 300;
+
 export default function ChooseButtons(props:any) {
     const [likeStyle, setLikeStyle] = useState("");
     const [dislikeStyle, setDislikeStyle] = useState("");
 
     const like = () => {
-        setTimeout(()=>setLikeStyle(""), 300);
+        setTimeout(()=>setLikeStyle(""), effectTimeout);
         props.like();
     }
 
     const dislike = () => {
-        setTimeout(()=>setDislikeStyle(""), 300);
+        setTimeout(()=>setDislikeStyle(""), effectTimeout);
         props.dislike();
     }
 

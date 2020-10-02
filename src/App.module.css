@@ -13,6 +13,9 @@
 
 .headerLink {
   flex: 1;
+}
+
+.headerLike {
   animation-name: hover;
   animation-iteration-count: infinite;
   animation-duration: 5s;

@@ -6,20 +6,32 @@ import { CheckCircleTwoTone, CloseCircleTwoTone, DeleteFilled, DislikeFilled } f
 import {remove} from '../../reducers/likedPictureReducer';
 import { Popover } from 'antd';
 
+const deleteHold = 300;
+
 export default function Picture(props:any) {
     const [lightboxVisible, setLightboxVisible] = useState(false);
     const [popoverVisible, setPopoverVisible] = useState(false);
+    const [picStyle, setPicStyle] = useState("");
+    const [canDelete, setCanDelete] = useState(false);
     const dispatch = useDispatch();
     
     const deletePic = ()=> {
-        dispatch(remove(props.src));
+        setPicStyle(styles.deleteAnimation);
         setLightboxVisible(false);
         setPopoverVisible(false);
+        setTimeout(()=>setCanDelete(true), deleteHold);
+    }
+
+    const deleteFromList = () => {
+        if (picStyle === styles.deleteAnimation && canDelete) {
+            dispatch(remove(props.src));
+        }
     }
 
     return (
         <div>
-            <div className={styles.pictureContainer}>
+            <div className={`${styles.pictureContainer} ${picStyle}`}
+                onAnimationEnd={deleteFromList}>
                 <Popover content={
                     <div className={styles.popoverContent}>
                         <CheckCircleTwoTone twoToneColor="#ffaa01" style={{fontSize:25}}
@@ -29,7 +41,7 @@ export default function Picture(props:any) {
                     </div>
                 } 
                     title="Are you sure?"
-                    placement="top"
+                    placement="bottom"
                     trigger="click" visible={popoverVisible}
                     onVisibleChange={setPopoverVisible}>
                     <div className={styles.closeBtn}><DeleteFilled/></div>

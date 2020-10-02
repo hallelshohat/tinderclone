@@ -21,6 +21,18 @@
   transition: all 0.2s;
 }
 
+.deleteAnimation {
+  animation-name: delete;
+  animation-duration: 0.5s;
+}
+
+@keyframes delete {
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
 .picture {
   margin: 0.2vw;
 }

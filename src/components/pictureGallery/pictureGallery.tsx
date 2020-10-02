@@ -9,12 +9,10 @@ export default function PictureGallery() {
     const pics = useSelector(selectPics);
 
     return (
-        <div>
-            <div className={styles.galleryContainer}>
-                {pics.map((pic, index) => (
-                    <Picture key={index} src={pic}/>
-                ))}
-            </div>
+        <div className={styles.galleryContainer}>
+            {pics.map(pic => (
+                <Picture key={pic} src={pic}/>
+            ))}
         </div>
     )
 }

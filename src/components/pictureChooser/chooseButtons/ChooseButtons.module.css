@@ -1,11 +1,12 @@
 .btnContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .actionBtn {
   width: 100%;
+  max-width: 150px;
   margin: 10px;
   height: 7vh;
   background-color: transparent;
