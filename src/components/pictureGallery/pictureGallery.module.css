@@ -1,6 +1,6 @@
 @media (max-width:2000px) {
     .picture {
-        max-width: 23vw;
+        max-width: 18vw;
     }
 }
 
@@ -13,12 +13,6 @@
 @media (max-width:800px) {
     .picture {
         max-width: 43vw;
-    }
-}
-
-@media (max-width:400px) {
-    .picture {
-        max-width: 90vw;
     }
 }
 
