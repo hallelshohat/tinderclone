@@ -7,6 +7,7 @@ import PhotosPage from './pages/PhotosPage';
 import { Divider } from 'antd';
 import PictureGenerator from './services/pictureGenerator';
 import { ModeContext, ModeType } from './ModeContext';
+import { UploadPage } from './pages/UploadPage';
 
 export const PictureProvider = createContext({} as PictureGenerator);
 export const ModeProvider = createContext({} as ModeContext)
@@ -40,8 +41,11 @@ function App() {
             <Route exact path="/">
                 <HomePage/>
             </Route>
-            <Route exact path="/liked">
+            <Route path="/liked">
               <PhotosPage/>
+            </Route>
+            <Route path="/upload">
+              <UploadPage/>
             </Route>
         </BrowserRouter>
         </div>

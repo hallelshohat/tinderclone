@@ -4,9 +4,10 @@ import {add} from '../../reducers/likedPictureReducer';
 import styles from './pictureChooser.module.css';
 import appStyles from '../../App.module.css';
 import {SmileOutlined} from '@ant-design/icons';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import ChooseButtons from './chooseButtons/ChooseButtons';
-import { PictureProvider } from '../../App';
+import { ModeProvider, PictureProvider } from '../../App';
+import noDataImage from '../../no-data.svg';
 
 export default function PictureContainer() {
     const dispatch = useDispatch();
@@ -14,12 +15,22 @@ export default function PictureContainer() {
     const [tmpPic, setTmpPic] = useState("");
     const [picStyle, setPicStyle] = useState(""); 
     const [tmpPicStyle, setTmpPicStyle] = useState("");
+    
+    const [picsDone, setPicsDone] = useState(false);
     const generator = useContext(PictureProvider);
+    const mode = useContext(ModeProvider).mode;
 
     const changePic = useCallback(async() => {
-        setTmpPic(await generator.getImageUrl());
-        setTmpPicStyle(styles.zoomAnimation);
-    }, [generator]);
+        const url = await generator.getImageUrl(mode);
+
+        if (!url) {
+            setPicsDone(true);
+        }
+        else {
+            setTmpPic(url);
+            setTmpPicStyle(styles.zoomAnimation);
+        }
+    }, [generator, mode]);
 
     const flipTmp = () => {
         setPic(tmpPic);
@@ -62,17 +73,21 @@ export default function PictureContainer() {
     return (
         <div>
             <div className={appStyles.container}>
-                <div className={styles.picContainer}>
-                    <img src={tmpPic} alt="" className={tmpPicStyle}
-                        onAnimationEnd={flipTmp}/>
-                    {(!tmpPic) ? 
-                        <Spin
-                        indicator={<SmileOutlined style={{fontSize:35}} spin/>}/> 
-                        : ""
-                    }
-                    <img src={pic} alt="" className={picStyle}
-                        onAnimationEnd={disablePic}/>
-                </div>
+                {!picsDone ? 
+                    <div className={styles.picContainer}>
+                        <img src={tmpPic} alt="" className={tmpPicStyle}
+                            onAnimationEnd={flipTmp}/>
+                        {(!tmpPic) ? 
+                            <Spin
+                            indicator={<SmileOutlined style={{fontSize:35}} spin/>}/> 
+                            : ""
+                        }
+                        <img src={pic} alt="" className={picStyle}
+                            onAnimationEnd={disablePic}/>
+                    </div>
+                : 
+                    <Empty image={noDataImage} imageStyle={{height:"20vh"}}/>
+                }
             </div>
             <ChooseButtons like={like} dislike={dislike} pic={pic}/>
         </div>
