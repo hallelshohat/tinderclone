@@ -22,7 +22,7 @@ function App() {
               </div>
             </Link>
             <div className={styles.headerLink}>
-              <Link to="/options">
+              <Link to="/liked">
                 <LikeTwoTone twoToneColor="#FF9D0B" 
                   style={{fontSize:25}}/>
               </Link>
@@ -33,7 +33,7 @@ function App() {
           <Route exact path="/">
               <HomePage/>
           </Route>
-          <Route exact path="/options">
+          <Route exact path="/liked">
             <OptionsPage/>
           </Route>
         </BrowserRouter>

@@ -16,16 +16,22 @@ export default function ChooseButtons(props:any) {
         props.dislike();
     }
 
+    const setStyle = (setButton:Function) => {
+        if (props.pic) {
+            setButton(styles.hoverEffect);
+        }
+    }
+
     return (
         <div className={styles.btnContainer}>
             <button className={`${styles.actionBtn} ${styles.dislikeBtn} ${dislikeStyle}`} 
                 onClick={dislike} disabled={!props.pic} 
-                onTouchStart={()=>setDislikeStyle(styles.hoverEffect)}>
+                onTouchStart={()=>setStyle(setDislikeStyle)}>
                 <FrownTwoTone twoToneColor="#2a18e7" style={{fontSize:30}}/>
             </button>
             <button className={`${styles.actionBtn} ${styles.likeBtn} ${likeStyle}`} 
                 onClick={like} disabled={!props.pic}
-                onTouchStart={()=>setLikeStyle(styles.hoverEffect)}>
+                onTouchStart={()=>setStyle(setLikeStyle)}>
                 <HeartTwoTone twoToneColor="#b80404" style={{fontSize:30}}/>
             </button>
         </div>
