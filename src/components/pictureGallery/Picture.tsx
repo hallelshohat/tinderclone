@@ -29,6 +29,7 @@ export default function Picture(props:any) {
                     </div>
                 } 
                     title="Are you sure?"
+                    placement="top"
                     trigger="click" visible={popoverVisible}
                     onVisibleChange={setPopoverVisible}>
                     <div className={styles.closeBtn}><DeleteFilled/></div>

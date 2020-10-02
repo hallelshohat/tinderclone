@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import PictureGenerator from '../../pictureGenerator';
 import {add} from '../../reducers/likedPictureReducer';
 import styles from './pictureChooser.module.css';
 import appStyles from '../../App.module.css';
-import {HeartTwoTone, FrownTwoTone, SmileOutlined} from '@ant-design/icons';
+import {SmileOutlined} from '@ant-design/icons';
 import { Spin } from 'antd';
+import ChooseButtons from './chooseButtons/ChooseButtons';
+import { PictureProvider } from '../../App';
 
 export default function PictureContainer() {
     const dispatch = useDispatch();
@@ -13,16 +14,12 @@ export default function PictureContainer() {
     const [tmpPic, setTmpPic] = useState("");
     const [picStyle, setPicStyle] = useState(""); 
     const [tmpPicStyle, setTmpPicStyle] = useState("");
-    const [likeStyle, setLikeStyle] = useState("");
-    const [dislikeStyle, setDislikeStyle] = useState("");
+    const generator = useContext(PictureProvider);
 
-    const changePic = async() => {
-        const generator = new PictureGenerator();
+    const changePic = useCallback(async() => {
         setTmpPic(await generator.getImageUrl());
         setTmpPicStyle(styles.zoomAnimation);
-        setLikeStyle("");
-        setDislikeStyle("");
-    }
+    }, [generator]);
 
     const flipTmp = () => {
         setPic(tmpPic);
@@ -38,7 +35,7 @@ export default function PictureContainer() {
 
     useEffect(() => {
         changePic();
-    }, []);
+    }, [changePic]);
 
     useEffect(()=> {
         if (tmpPic === pic && picStyle === "") {
@@ -77,18 +74,7 @@ export default function PictureContainer() {
                         onAnimationEnd={disablePic}/>
                 </div>
             </div>
-            <div className={styles.btnContainer}>
-                <button className={`${styles.actionBtn} ${styles.dislikeBtn} ${dislikeStyle}`} 
-                    onClick={dislike} disabled={!pic} 
-                    onTouchStart={()=>setDislikeStyle(styles.hoverEffect)}>
-                    <FrownTwoTone twoToneColor="#2a18e7" style={{fontSize:30}}/>
-                </button>
-                <button className={`${styles.actionBtn} ${styles.likeBtn} ${likeStyle}`} 
-                    onClick={like} disabled={!pic}
-                    onTouchStart={()=>setLikeStyle(styles.hoverEffect)}>
-                    <HeartTwoTone twoToneColor="#b80404" style={{fontSize:30}}/>
-                </button>
-            </div>
+            <ChooseButtons like={like} dislike={dislike} pic={pic}/>
         </div>
     )
 }
