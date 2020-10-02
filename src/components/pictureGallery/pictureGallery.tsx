@@ -1,39 +1,20 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import 'react-image-lightbox/style.css';
+import { useSelector } from 'react-redux';
 import { selectPics } from '../../reducers/likedPictureReducer';
 import styles from './pictureGallery.module.css';
-import 'react-image-lightbox/style.css';
-import Lightbox from 'react-image-lightbox';
-import { DislikeFilled } from '@ant-design/icons';
-import {remove} from '../../reducers/likedPictureReducer';
+import Picture from './Picture';
 
 export default function PictureGallery() {
     const pics = useSelector(selectPics);
-    const dispatch = useDispatch();
-
-    const [picIndex, setPicIndex] = useState(-1);
-
-    const deletePic = ()=> {
-        dispatch(remove(pics[picIndex]));
-        setPicIndex(-1);
-    }
 
     return (
         <div>
             <div className={styles.galleryContainer}>
                 {pics.map((pic, index) => (
-                        <img key={index} src={pic} className={styles.picture} 
-                            alt=""
-                            onClick={()=>setPicIndex(index)}/>
+                    <Picture key={index} src={pic}/>
                 ))}
             </div>
-
-            {picIndex!==-1 && <Lightbox mainSrc={pics[picIndex]} 
-                toolbarButtons={[<DislikeFilled 
-                    onClick={deletePic}
-                    style={{color:"#b8b8b8", 
-                    fontSize:18, cursor:"pointer"}}/>]}
-                onCloseRequest={()=>setPicIndex(-1)}/> }
         </div>
     )
 }
