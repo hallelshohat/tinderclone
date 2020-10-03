@@ -9,6 +9,7 @@ import PictureGenerator from './services/pictureGenerator';
 import { ModeContext, ModeType } from './services/ModeContext';
 import { UploadPage } from './pages/UploadPage';
 import { Firebase } from './services/Firebase';
+import {v4 as uuid} from 'uuid';
 
 export const PictureProvider = createContext({} as PictureGenerator);
 export const ModeProvider = createContext({} as ModeContext)
@@ -16,7 +17,7 @@ export const FirebaseProvider = createContext({} as Firebase);
 
 function App() {
   return (
-    <ModeProvider.Provider value={new ModeContext(ModeType.random, "123")}>
+    <ModeProvider.Provider value={new ModeContext(ModeType.random, uuid())}>
       <FirebaseProvider.Provider value={new Firebase()}>
         <PictureProvider.Provider value={new PictureGenerator()}>
           <div className={styles.app}>   
