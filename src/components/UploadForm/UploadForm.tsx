@@ -7,6 +7,7 @@ import styles from './UploadForm.module.css';
 import appStyles from '../../App.module.css';
 import { useDispatch } from 'react-redux';
 import {add} from '../../reducers/uploadedPicturesReducer';
+import {compress} from '../../services/imageCompressor';
 
 message.config({
     top:50
@@ -32,12 +33,12 @@ export function UploadForm() {
             if (images) {
                 for (let i = 0; i < images.length; i++) {
                     setImageIndex(i+1);
-                    
+                    const compressed = await compress(images[i]);
                     try {
                         const url = await fireBase.uploadPic(`${mode.id}/`, 
                             (snapshot)=>setPercentage(
                                 snapshot.bytesTransferred/snapshot.totalBytes * 100), 
-                            images[i]);
+                            compressed);
                         dispatch(add(url));
                     }
                     catch (e) {
@@ -53,7 +54,7 @@ export function UploadForm() {
     
     return (
         <div className={appStyles.container}>
-            <input type="file" onChange={upload} multiple ref={inputRef}
+            <input type="file" accept="image/*" onChange={upload} multiple ref={inputRef}
                 style={{display:"none"}}></input>
 
             <button className={styles.uploadBtn} 
