@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {add} from '../../reducers/likedPicturesReducer';
 import styles from './pictureChooser.module.css';
 import appStyles from '../../App.module.css';
@@ -8,9 +8,15 @@ import { Empty, Spin } from 'antd';
 import ChooseButtons from './chooseButtons/ChooseButtons';
 import { ModeProvider, PictureProvider } from '../../App';
 import noDataImage from '../../no-data.svg';
+import { selectIndex, selectPics } from '../../reducers/uploadedPicturesReducer';
+import { ModeType } from '../../services/ModeContext';
+import  {increment} from '../../reducers/uploadedPicturesReducer';
 
 export default function PictureContainer() {
     const dispatch = useDispatch();
+    const uploaded = useSelector(selectPics);
+    const index = useSelector(selectIndex);
+
     const [pic, setPic] = useState("");
     const [tmpPic, setTmpPic] = useState("");
     const [picStyle, setPicStyle] = useState(""); 
@@ -21,16 +27,16 @@ export default function PictureContainer() {
     const mode = useContext(ModeProvider).mode;
 
     const changePic = useCallback(async() => {
-        const url = await generator.getImageUrl(mode);
-
+        const url = await generator.getImageUrl(mode, uploaded, index);
         if (!url) {
-            setPicsDone(true);
+            setTmpPic("");
+            setTimeout(()=>setPicsDone(true), 500);
         }
         else {
             setTmpPic(url);
             setTmpPicStyle(styles.zoomAnimation);
         }
-    }, [generator, mode]);
+    }, [generator, mode, uploaded, index]);
 
     const flipTmp = () => {
         setPic(tmpPic);
@@ -54,42 +60,50 @@ export default function PictureContainer() {
         }
     }, [pic, tmpPic, picStyle]);
     
-    const like = ()=> {
-        if (!picStyle && pic) {
-            dispatch(add(pic));
-            setPicStyle(styles.likeAnimation);
-            changePic();
-        }
+    const action = (func:()=>void) => {
+        return () => {
+            if (!picStyle && pic) {
+                if (mode === ModeType.upload) {
+                    dispatch(increment());  
+                }
+                func();
+                changePic();
+            }
+        };
     }
+    const like = action(()=> {
+        dispatch(add(pic));
+        setPicStyle(styles.likeAnimation);
+    });
 
-    const dislike = ()=> {
-        if (!picStyle && pic) {
-            setPicStyle(styles.dislikeAnimation);
-            URL.revokeObjectURL(pic);
-            changePic();
-        }
-    }
+    const dislike = action(()=> {
+        setPicStyle(styles.dislikeAnimation);
+        URL.revokeObjectURL(pic);
+    });
 
     return (
         <div>
             <div className={appStyles.container}>
                 {!picsDone ? 
-                    <div className={styles.picContainer}>
-                        <img src={tmpPic} alt="" className={tmpPicStyle}
-                            onAnimationEnd={flipTmp}/>
-                        {(!tmpPic) ? 
-                            <Spin
-                            indicator={<SmileOutlined style={{fontSize:35}} spin/>}/> 
-                            : ""
-                        }
-                        <img src={pic} alt="" className={picStyle}
-                            onAnimationEnd={disablePic}/>
+                    <div>
+
+                        <div className={styles.picContainer}>
+                            <img src={tmpPic} alt="" className={tmpPicStyle}
+                                onAnimationEnd={flipTmp}/>
+                            {(!tmpPic) ? 
+                                <Spin
+                                indicator={<SmileOutlined style={{fontSize:35}} spin/>}/> 
+                                : ""
+                            }
+                            <img src={pic} alt="" className={picStyle}
+                                onAnimationEnd={disablePic}/>
+                        </div>
+                        <ChooseButtons like={like} dislike={dislike} pic={pic}/>
                     </div>
                 : 
                     <Empty image={noDataImage} imageStyle={{height:"25vh"}}/>
                 }
             </div>
-            <ChooseButtons like={like} dislike={dislike} pic={pic}/>
         </div>
     )
 }

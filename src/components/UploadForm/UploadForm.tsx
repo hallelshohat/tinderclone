@@ -8,6 +8,10 @@ import appStyles from '../../App.module.css';
 import { useDispatch } from 'react-redux';
 import {add} from '../../reducers/uploadedPicturesReducer';
 
+message.config({
+    top:50
+})
+
 export function UploadForm() {
     const mode = useContext(ModeProvider);
     const fireBase = useContext(FirebaseProvider); 
@@ -37,12 +41,12 @@ export function UploadForm() {
                         dispatch(add(url));
                     }
                     catch (e) {
-                        message.error("could not upload pictures");
+                        message.error("could not upload pictures", 1);
                     }                
                 }
                 
-                mode.setMode(ModeType.upload);
                 message.success("pictures uploaded successfully!", 1);
+                mode.setMode(ModeType.upload);
             }
         })();
     }, [images, fireBase, mode, dispatch])
@@ -58,7 +62,7 @@ export function UploadForm() {
 
             {images && 
                 <div>
-                    <Progress percent={percentage}/>
+                    <Progress percent={percentage} format={p=>p?.toFixed(0)+"%"}/>
                     {imageIndex}/{images.length}
                 </div>
             }
