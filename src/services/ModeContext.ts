@@ -4,7 +4,7 @@ export enum ModeType {
 }
 
 export class ModeContext {
-  constructor(public mode: ModeType) {}
+  constructor(public mode: ModeType, public id: string) {}
 
   setMode(mode: ModeType): void {
     this.mode = mode;

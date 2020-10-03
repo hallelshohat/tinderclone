@@ -1,4 +1,4 @@
-import { ModeType } from "../ModeContext";
+import { ModeType } from "./ModeContext";
 
 export default class PictureGenerator {
   async getImageUrl(mode: ModeType) {

@@ -1,13 +1,8 @@
-import React, { useContext } from 'react';
-import { ModeProvider } from '../App';
-import { ModeType } from '../ModeContext';
+import React from 'react';
+import { UploadForm } from '../components/UploadForm/UploadForm';
 
 export function UploadPage() {
-    const mode = useContext(ModeProvider);
-
-    mode.setMode(ModeType.upload);
-    
     return (
-        <div>hi</div>
+        <UploadForm/>
     )
 }

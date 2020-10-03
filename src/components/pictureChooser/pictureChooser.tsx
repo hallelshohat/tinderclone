@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {add} from '../../reducers/likedPictureReducer';
+import {add} from '../../reducers/likedPicturesReducer';
 import styles from './pictureChooser.module.css';
 import appStyles from '../../App.module.css';
 import {SmileOutlined} from '@ant-design/icons';
@@ -86,7 +86,7 @@ export default function PictureContainer() {
                             onAnimationEnd={disablePic}/>
                     </div>
                 : 
-                    <Empty image={noDataImage} imageStyle={{height:"20vh"}}/>
+                    <Empty image={noDataImage} imageStyle={{height:"25vh"}}/>
                 }
             </div>
             <ChooseButtons like={like} dislike={dislike} pic={pic}/>

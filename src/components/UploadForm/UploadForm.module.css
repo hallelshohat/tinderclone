@@ -1,0 +1,14 @@
+.uploadBtn {
+  outline: none;
+  background-color: transparent;
+  transition: all 0.5s;
+  border: 2px solid #f88535;
+  border-radius: 5%;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.uploadBtn:hover {
+  transform: scale(1.1);
+  background-color: #fff5f3;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-image-lightbox/style.css';
 import { useSelector } from 'react-redux';
-import { selectPics } from '../../reducers/likedPictureReducer';
+import { selectPics } from '../../reducers/likedPicturesReducer';
 import styles from './pictureGallery.module.css';
 import Picture from './Picture';
 

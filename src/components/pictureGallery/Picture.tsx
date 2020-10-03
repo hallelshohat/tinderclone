@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
 import { CheckCircleTwoTone, CloseCircleTwoTone, DeleteFilled, DislikeFilled } from '@ant-design/icons';
-import {remove} from '../../reducers/likedPictureReducer';
+import {remove} from '../../reducers/likedPicturesReducer';
 import { Popover } from 'antd';
 
 const deleteHold = 300;
