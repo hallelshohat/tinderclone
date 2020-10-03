@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import styles from './App.module.css'
-import {FireTwoTone, LikeTwoTone, UploadOutlined} from '@ant-design/icons';
+import Icon, {LikeTwoTone, UploadOutlined} from '@ant-design/icons';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import HomePage from './pages/Homepage';
 import PhotosPage from './pages/PhotosPage';
@@ -10,6 +10,7 @@ import { ModeContext, ModeType } from './services/ModeContext';
 import { UploadPage } from './pages/UploadPage';
 import { Firebase } from './services/Firebase';
 import {v4 as uuid} from 'uuid';
+import {ReactComponent as logo} from './lightbulb.svg';
 
 export const PictureProvider = createContext({} as PictureGenerator);
 export const ModeProvider = createContext({} as ModeContext)
@@ -29,9 +30,12 @@ function App() {
                   </Link>
                 </div>
                 <Link to="/">
-                  <div className={styles.logo}>
+                  {/* <div className={styles.logo}>
                     <FireTwoTone twoToneColor="#ec3b07" style={{fontSize:40}}/>
-                  </div>
+                  </div> */}
+                  <div className={styles.logo}>
+                    <Icon component={logo} style={{fontSize:40,color:"#ec3b07"}}/>
+                  </div> 
                 </Link>
                 <div className={`${styles.headerLink} ${styles.headerLike}`}>
                   <Link to="/liked">

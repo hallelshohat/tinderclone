@@ -86,7 +86,6 @@ export default function PictureContainer() {
             <div className={appStyles.container}>
                 {!picsDone ? 
                     <div>
-
                         <div className={styles.picContainer}>
                             <img src={tmpPic} alt="" className={tmpPicStyle}
                                 onAnimationEnd={flipTmp}/>
