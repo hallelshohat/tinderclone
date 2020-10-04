@@ -4,12 +4,6 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .picture {
-    max-width: 30vw;
-  }
-}
-
 @media (max-width: 800px) {
   .picture {
     max-width: 43vw;
