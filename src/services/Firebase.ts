@@ -22,17 +22,17 @@ export class Firebase {
     this.storage = app.storage();
   }
 
-  uploadPic(
-    path: string,
-    progress: (status: app.storage.UploadTaskSnapshot) => void,
-    picture: File
-  ): Promise<string> {
+  uploadPic(path: string, picture: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const uploadTask = this.storage
         .ref(firePath + path + picture.name)
         .put(picture);
-      uploadTask.on("state_changed", progress, reject, () =>
-        resolve(this.getImageUrl(path, picture.name))
+
+      uploadTask.on(
+        "state_changed",
+        () => {},
+        reject,
+        () => resolve(this.getImageUrl(path, picture.name))
       );
     });
   }

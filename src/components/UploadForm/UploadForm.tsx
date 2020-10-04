@@ -1,6 +1,6 @@
-import { PictureOutlined } from '@ant-design/icons';
-import { message, Progress } from 'antd';
-import React, { ChangeEvent, createRef, useContext, useEffect, useState } from 'react';
+import { CheckCircleFilled, PictureOutlined } from '@ant-design/icons';
+import { message, Progress, Spin } from 'antd';
+import React, { ChangeEvent, createRef, useCallback, useContext, useEffect, useState } from 'react';
 import { FirebaseProvider, ModeProvider } from '../../App';
 import { ModeType } from '../../services/ModeContext';
 import styles from './UploadForm.module.css';
@@ -17,40 +17,44 @@ export function UploadForm() {
     const mode = useContext(ModeProvider);
     const fireBase = useContext(FirebaseProvider); 
     const inputRef = createRef<HTMLInputElement>();
-
-    const [percentage, setPercentage] = useState(0);
-    const [imageIndex, setImageIndex] = useState(0);
+    const [imageCount, setImageCount] = useState(0);
     const [images, setImages] = useState(null as FileList | null);
     
     const dispatch = useDispatch();
+
+    const percent = ()=>images ? 100 * imageCount / images.length : 0;
     
     const upload = async(e:ChangeEvent<HTMLInputElement>) =>{
         setImages(e.target.files);
     }
 
+    const uploadOne = useCallback(async(image:File) => {
+        try {
+            const compressed = await compress(image);
+            const url = await fireBase.uploadPic(`${mode.id}/`, 
+                compressed);
+            dispatch(add(url));
+            setImageCount(count=>count+1);
+        }
+        catch (e) {
+            message.error("could not upload pictures", 1);
+        }                
+    }, [fireBase, mode, dispatch]);
+
     useEffect(()=> {
-        (async()=>{
-            if (images) {
-                for (let i = 0; i < images.length; i++) {
-                    setImageIndex(i+1);
-                    const compressed = await compress(images[i]);
-                    try {
-                        const url = await fireBase.uploadPic(`${mode.id}/`, 
-                            (snapshot)=>setPercentage(
-                                snapshot.bytesTransferred/snapshot.totalBytes * 100), 
-                            compressed);
-                        dispatch(add(url));
-                    }
-                    catch (e) {
-                        message.error("could not upload pictures", 1);
-                    }                
-                }
-                
-                message.success("pictures uploaded successfully!", 1);
-                mode.setMode(ModeType.upload);
+        if (images) {
+            for (let i = 0; i < images.length; i++) {
+                uploadOne(images[i]);
             }
-        })();
-    }, [images, fireBase, mode, dispatch])
+        }
+    }, [images, uploadOne]);
+
+    useEffect(()=>{
+        if (imageCount === images?.length) {
+            message.success("pictures uploaded successfully!", 1);
+            mode.setMode(ModeType.upload);
+        }
+    }, [images, imageCount, mode]);
     
     return (
         <div className={appStyles.container}>
@@ -61,12 +65,17 @@ export function UploadForm() {
                 onClick={()=>inputRef.current?.click()}>Upload <PictureOutlined/>
             </button>
 
-            {images && 
-                <div>
-                    <Progress percent={percentage} format={p=>p?.toFixed(0)+"%"}/>
-                    {imageIndex}/{images.length}
-                </div>
-            }
+            {images &&
+                    <div>
+                        <Progress percent={percent()} format={p=>p?.toFixed(0)+"%"}/>
+                        {imageCount}/{images.length} 
+                        {percent() < 100 ? 
+                        <Spin/>
+                        :
+                        <CheckCircleFilled style={{color:"green"}}/>
+                        }
+                    </div>
+                }
         </div>
     )
 }
